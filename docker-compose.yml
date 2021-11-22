@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ./.docker/nginx-unit
+      dockerfile: Dockerfile
+    volumes:
+      - '.:/var/www/app'
+#      - '.docker/nginx-unit/php.ini:/etc/etc/php/8.0/cli/php.ini'
+#      - '.docker/nginx-unit/php.ini:/etc/etc/php/8.0/embed/php.ini'
+    container_name: nginx-unit-test
+    ports:
+      - 80:80

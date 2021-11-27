@@ -1,11 +1,27 @@
 {
+    "settings": {
+        "http": {
+            "header_read_timeout": 30,
+            "body_read_timeout": 30,
+            "send_timeout": 30,
+            "idle_timeout": 180,
+            "max_body_size": 52428800
+        }
+    },
     "listeners": {
         "*:80": {
             "pass": "routes"
         }
     },
-
     "routes": [
+        {
+            "match": {
+                "uri": "/.*"
+            },
+            "action": {
+                "return": 403
+            }
+        },
         {
             "match": {
                 "uri": [
@@ -13,7 +29,6 @@
                     "*.php/*"
                 ]
             },
-
             "action": {
                 "pass": "applications/symfony/direct"
             }
@@ -27,15 +42,22 @@
             }
         }
     ],
-
     "applications": {
         "symfony": {
+            "limits": {
+                "timeout": 30,
+                "requests": 10000
+            },
+            "processes": 4,
+            "working_directory": "/var/www/app",
+            "environment": {
+                "TEST_ENV_VAR": "val"
+            },
             "type": "php",
             "targets": {
                 "direct": {
                     "root": "/var/www/app/public/"
                 },
-
                 "index": {
                     "root": "/var/www/app/public/",
                     "script": "index.php"

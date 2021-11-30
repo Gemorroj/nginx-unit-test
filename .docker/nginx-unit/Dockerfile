@@ -8,7 +8,7 @@ RUN apt update -y \
 
 
 # Composer
-RUN curl -L -o /composer.phar https://github.com/composer/composer/releases/download/2.1.12/composer.phar \
+RUN curl -L -o /composer.phar https://github.com/composer/composer/releases/download/2.1.14/composer.phar \
     && chmod 755 /composer.phar
 
 
